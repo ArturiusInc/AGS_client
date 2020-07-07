@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, FC } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { GlobalStyle } from "./themes/globalStyle";
+import { Wrapper, Header, Main, Sidebar, MainContent } from "./themes/themeOne";
+import MenuSidebar from "./components/MenuSidebar";
+import { IconMenu } from "./themes/IconMenu";
+import { Normalize } from "styled-normalize";
+import { routes } from "./routes/router";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: FC = () => {
+	const [isSidebar, setIsSidebar] = useState(true);
+
+	return (
+		<Wrapper>
+			<Router>
+				<Header>
+					<IconMenu setissidebar={setIsSidebar} issidebar={isSidebar} />
+					<p>
+						<Switch>
+							{routes.map((r) => {
+								return <Route key={r.title} path={r.path} children={r.title} exact={r.exact} />;
+							})}
+						</Switch>
+					</p>
+				</Header>
+				<Main>
+					{isSidebar && (
+						<Sidebar>
+							<MenuSidebar />
+						</Sidebar>
+					)}
+					<MainContent>
+						<Switch>
+							{routes.map((r) => {
+								return <Route key={r.title} path={r.path} component={r.component} exact={r.exact} />;
+							})}
+						</Switch>
+					</MainContent>
+				</Main>
+				<Normalize />
+				<GlobalStyle />
+			</Router>
+		</Wrapper>
+	);
+};
 
 export default App;
