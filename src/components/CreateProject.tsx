@@ -1,9 +1,11 @@
 import React, { useState, useEffect, FC } from "react";
 import { Button } from "../themes/themeOne";
 import { useCreateProject } from "../serverApi/serverApi";
+// import { createProjectRes } from "../serverApi/serverApi";
 
+// FIXME: попробовать удалить any
 type createProjectProps = {
-	projectsss: React.Dispatch<React.SetStateAction<never[]>>;
+	projectsss: React.Dispatch<React.SetStateAction<any>>;
 	children?: never;
 };
 

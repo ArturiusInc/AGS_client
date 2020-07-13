@@ -37,12 +37,12 @@ export const useGetDoorsWindows = (projectId: string): [serverResDoorsWindows[],
 	return [doorsWindows, error, loading];
 };
 
-type createProjectRes = {
+export type createProjectRes = {
 	id: string;
 	projects: never[];
 };
 
-export const useCreateProject = (projectName: string) => {
+export const useCreateProject = (projectName: string): [string, boolean, boolean, createProjectRes[]] => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [projectId, setProjectId] = useState("");
 	const [projectss, setProjectss] = useState([]);
@@ -52,7 +52,11 @@ export const useCreateProject = (projectName: string) => {
 		const createProject = async () => {
 			setIsLoading(true);
 			try {
-				const response = await axios({ method: CREATE_PROJECT.method, url: CREATE_PROJECT.url, data: { projectName } });
+				const response = await axios({
+					method: CREATE_PROJECT.method,
+					url: CREATE_PROJECT.url,
+					data: { projectName },
+				});
 				const res: createProjectRes = response.data;
 				setProjectId(res.id);
 				setProjectss(res.projects);

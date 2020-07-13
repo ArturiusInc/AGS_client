@@ -7,7 +7,7 @@ module.exports = {
 		extensions: [".ts", ".tsx", ".js"],
 	},
 	output: {
-		path: path.join(__dirname, "/dist"),
+		path: path.join(__dirname, "/build"),
 		filename: "bundle.min.js",
 	},
 	module: {
@@ -21,11 +21,19 @@ module.exports = {
 					},
 				],
 			},
+			{
+				test: /\.(woff|woff2|eot|ttf|otf)$/,
+				use: ["file-loader"],
+			},
+			{
+				test: /\.(png|svg|jpg|gif)$/,
+				use: ["file-loader"],
+			},
 		],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: "./src/index.html",
+			template: "./public/index.html",
 		}),
 	],
 };
