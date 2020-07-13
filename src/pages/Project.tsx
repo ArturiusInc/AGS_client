@@ -1,5 +1,5 @@
 import React, { FC, useMemo, useCallback } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { Button } from "../themes/themeOne";
 import { useGetDoorsWindows, serverResDoorsWindows } from "../serverApi/serverApi";
 import deletIcon from "../themes/icons8-delete.svg";
@@ -21,14 +21,14 @@ export const Project: FC = () => {
 		[history, id]
 	);
 
-	const projectTableList = useMemo(() => {
-		return typeof doorsWindows === "object"
-			? doorsWindows?.map((item: serverResDoorsWindows, i: number) => {
+	const dwTableList = useMemo(() => {
+		return doorsWindows.length
+			? doorsWindows.map((item: serverResDoorsWindows, i: number) => {
 					return (
 						<tr>
-							<td>{item}</td>
-							<td>{item}</td>
-							<td>{item}</td>
+							<td>{i}</td>
+							<td>{item.ags}</td>
+							<td>{item.glass}</td>
 							<td style={{ display: "flex", flexDirection: "row" }}>
 								<IconButton click={goToDoorWindow} id={i} icon={deletIcon}>
 									Remove
@@ -43,9 +43,12 @@ export const Project: FC = () => {
 			: "пусто";
 	}, [doorsWindows, goToDoorWindow]);
 
-	const handleClick = (num: number) => {
-		console.log(num);
+	type newWindowDoor = (num: number, ags: 50 | 68, wd: "w" | "d") => void;
+
+	const handleClick: newWindowDoor = (num, ags, wd) => {
+		history.push(`/project/${id}/${num}?ags=${ags}&wd=${wd}`);
 	};
+
 	return (
 		<div>
 			{error ? <p>Ошибка попробуйте обновить страницу: {error}</p> : null}
@@ -54,18 +57,20 @@ export const Project: FC = () => {
 			) : (
 				<table>
 					<tr>
-						<td>Номер</td>
-						<td>Имя</td>
-						<td>Количество окон дверей</td>
+						<td>№</td>
+						<td>AGS</td>
+						<td>Стеклопакет</td>
 						<td>редактировать удалить</td>
 					</tr>
-					{projectTableList}
+					{dwTableList}
 				</table>
 			)}
-			<Button onClick={() => handleClick(1)}>Холодное окно</Button>
-			<Button>Тёплое окно</Button>
-			<Button>Холодная дверь</Button>
-			<Button>Тёплая дверь</Button>
+			<Link to={`/project/${id}/${doorsWindows.length}?ags=${50}&wd=w`}>
+				<Button onClick={() => handleClick(doorsWindows.length, 50, "w")}>Холодное окно</Button>
+			</Link>
+			<Button onClick={() => handleClick(doorsWindows.length, 68, "w")}>Тёплое окно</Button>
+			<Button onClick={() => handleClick(doorsWindows.length, 50, "d")}>Холодная дверь</Button>
+			<Button onClick={() => handleClick(doorsWindows.length, 68, "d")}>Тёплая дверь</Button>
 		</div>
 	);
 };

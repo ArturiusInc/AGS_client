@@ -3,13 +3,15 @@ import axios, { AxiosResponse } from "axios";
 import { CREATE_PROJECT, GET_PROJECTS, REMOVE_PROJECT, GET_PROJECT } from "./urlConst";
 
 export type serverResDoorsWindows = {
-	climat: "cold" | "hot";
+	ags: 50 | 68;
+	glass: string;
+	profils: Array<object>;
 };
 
-export const useGetDoorsWindows = (projectId: string) => {
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(false);
-	const [doorsWindows, setDoorsWindows] = useState<serverResDoorsWindows[] | null>(null);
+export const useGetDoorsWindows = (projectId: string): [serverResDoorsWindows[], boolean, boolean] => {
+	const [loading, setLoading] = useState<boolean>(false);
+	const [error, setError] = useState<boolean>(false);
+	const [doorsWindows, setDoorsWindows] = useState<serverResDoorsWindows[]>([]);
 
 	useEffect(() => {
 		const getDoorsWindows = async (id: string) => {

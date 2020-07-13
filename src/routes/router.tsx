@@ -1,6 +1,7 @@
+import { FC } from "react";
 import { AllProjects } from "../pages/AllProjects";
 import { Project } from "../pages/Project";
-import { FC } from "react";
+import { DoorWindow } from "../pages/DoorWindow";
 
 type rout = {
 	path: string;
@@ -22,5 +23,11 @@ export const routes: routs = [
 		path: "/project/:id",
 		component: Project,
 		title: "Проект",
+		exact: true,
+	},
+	{
+		path: "/project/:id/:idwd",
+		component: DoorWindow,
+		title: "Дверь окно",
 	},
 ];

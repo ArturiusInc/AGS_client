@@ -25,11 +25,13 @@ export const Main = styled.div`
 export const Sidebar = styled.div`
 	transition: all 1s;
 	width: 280px;
+	min-width: 165px;
 	background-color: #ccc;
 `;
 
 export const MainContent = styled.div`
 	padding: 10px;
+	flex-grow: 1;
 `;
 
 export const Button = styled.button`

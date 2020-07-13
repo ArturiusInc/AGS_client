@@ -7,7 +7,7 @@ export const IconButton: React.FC<{
 	icon?: string;
 }> = ({ click, id, icon, children }) => {
 	return (
-		<BlutButton onClick={() => (id ? click(id) : click())}>
+		<BlutButton onClick={() => (id !== null || id !== undefined ? click(id) : click())}>
 			<img src={icon} alt="" />
 			{children}
 		</BlutButton>
